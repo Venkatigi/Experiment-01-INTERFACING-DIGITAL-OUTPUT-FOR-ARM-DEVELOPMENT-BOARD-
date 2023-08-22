@@ -63,7 +63,7 @@ The main features of LPC2148 include the following.
 
 9. use project and build all 
 ![image](https://user-images.githubusercontent.com/36288975/226189554-3f7101ac-3f41-48fc-abc7-480bd6218dec.png)
-10. once the project is bulild link the hexfile build in stm32cube ide using post processor build 
+10. once the project is bulild 
 ![image](https://user-images.githubusercontent.com/36288975/226189577-c61cc1eb-3990-4968-8aa6-aefffc766b70.png)
 
 11. click on debug option 
@@ -80,11 +80,144 @@ The main features of LPC2148 include the following.
 
 ## STM 32 CUBE PROGRAM :
 
+Developed by     : Venkatesh E
+Register Number  : 212221230119
+
+#include "main.h"
+
+void SystemClock_Config(void);
+
+static void MX_GPIO_Init(void);
+
+static void MX_USART2_UART_Tnit(void);
+
+void led();
+
+int main(void)
+
+{
+
+HAL_Init();
+
+SystemClock_Config();
+
+MX_GPIO_Init();
+
+while (1)
+
+{
+
+        led();
+}
+
+}
+
+void led ()
+
+{
+
+HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
+
+HAL_Delay(2000);
+
+HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
+
+HAL_Delay(2000);
+}
+
+void SystemClock_Config(void)
+
+{
+
+RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+
+RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+
+HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1);
+
+RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+
+RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+
+RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV1;
+
+RCC_OscInitStruct.HSICalibrationValue=RCC_HSICALIBRATION_DEFAULT;
+
+RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+
+if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+
+{
+
+      Error_Handler();
+}
+
+RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCL|RCC_CLOCKTYPE_PCLK1;
+
+RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+
+RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+
+RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+
+if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+
+{
+
+     Error_Handler();
+}
+
+}
+
+static void MX_GPIO_Init(void)
+
+{
+
+GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+__HAL_RCC_GPIOA_CLK_ENABLE();
+
+HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
+
+GPIO_InitStruct.Pin = GPIO_PIN_5;
+
+GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+
+GPIO_InitStruct.Pull = GPIO_NOPULL;
+
+GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+
+HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+}
+
+void Error_Handler(void)
+
+{
+
+  __disable_irq();
+
+    while (1)
+{
+
+}
+
+}
+
+void assert_failed(uint8_t *file, uint32_t line)
+
+{
+
+}
+
+#endif
 
 
 ## Output  :
+ ![output1](https://user-images.githubusercontent.com/121166075/226654091-f7d6abb5-e028-45fc-8152-0ca19dfd8645.jpg)
+
  
- 
+
  
  
 ## Result :
